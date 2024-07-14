@@ -1,0 +1,522 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+form label,
+li {
+    font-family: "Futura", sans-serif;
+    /* Set Futura as the font family */
+}
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: wrap;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    /* Change background color to white */
+    color: #333;
+    /* Change text color to dark gray */
+    margin: 0;
+    padding-bottom: 300px;
+}
+
+p {
+    font-size: 16px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: #333;
+    /* Change heading color to dark gray */
+    font-weight: bold;
+}
+
+h1,
+h2 {
+    font-size: 20px;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+a {
+    color: #9b7fe8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #7a5fc1;
+}
+
+li {
+    margin-left: 5rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f3f4fe;
+    color: #333;
+    padding: 10px 20px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    margin-left: 20px;
+    color: #333;
+    /* Change navbar link color to dark gray */
+    text-decoration: none;
+    position: relative;
+    padding: 0 10px;
+}
+
+.nav-link:hover {
+    color: #7a5fc1;
+    /* Change navbar link hover color to a darker lilac purple */
+}
+
+.nav-link:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    height: 80%;
+    width: 1px;
+    background-color: #333;
+    /* Change navbar link separator color to dark gray */
+    top: 10%;
+    right: -10px;
+}
+
+.logo {
+    position: relative;
+    align-items: flex-start;
+    padding: 5;
+    margin-right: auto;
+}
+
+/* Footer */
+.footer {
+    background-color: #f3f4fe;
+    /* Change footer background to light lilac purple */
+    color: #333;
+    /* Change footer text color to dark gray */
+    padding: 50px 20px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+.footer-links a {
+    color: #333;
+    /* Change footer link color to dark gray */
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    color: #7a5fc1;
+    /* Change footer link hover color to a darker lilac purple */
+}
+
+.footer-icons {
+    margin-top: 20px;
+}
+
+.footer-icons i {
+    color: #333;
+    /* Change footer icon color to dark gray */
+    font-size: 20px;
+    margin: 0 10px;
+}
+
+.footer-icons i:hover {
+    color: #7a5fc1;
+    /* Change footer icon hover color to a darker lilac purple */
+}
+
+/* Hero Section */
+#home {
+    text-align: center;
+    padding: 100px 0;
+}
+
+#home h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+#home p {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.btn {
+    display: inline-block;
+    background: #7a5fc1;
+    /* Change button background to lilac purple */
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #5c4291;
+    color: #fff;
+    /* Change button hover background to a darker lilac purple */
+    text-decoration: none;
+}
+
+/* Sections */
+section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+section h1 {
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+section h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+section p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    padding: 0 30px;
+}
+
+/* Form */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: #ccc;
+    /* Change form input border color to light gray */
+    color: #333;
+    /* Change form input text color to dark gray */
+
+    &:focus {
+        border-color: #9b7fe8;
+        /* Change form input focus border color to blue */
+        outline: none;
+    }
+}
+
+form button {
+    display: block;
+    width: 10rem;
+    background: #9b7fe8;
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: left;
+    font-family: "Futura", "sans-serif";
+    font-size: 14px;
+}
+
+form button:hover {
+    background: #774ac3;
+}
+
+/* About Page */
+.team-members {
+    display: flex;
+    justify-content: center;
+    /* Center align the items horizontally */
+    gap: 20px;
+}
+
+.team-member {
+    text-align: flex-start;
+    margin-bottom: 30px;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.team-member h1 {
+    font-size: 35px;
+    margin: 5px;
+}
+
+.team-member p {
+    margin: 5px 0;
+}
+
+.project-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.project-card {
+    background-color: #9b7fe8;
+    color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px;
+    width: 350px;
+    /* Adjust width as needed */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.project-card h2 {
+    color: white;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+}
+
+.learn-more {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: white;
+    color: #9b7fe8;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.learn-more:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Styles for social media links */
+.social-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social-link {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #9b7fe8;
+    /* Background color */
+    border-radius: 50%;
+    /* Rounded shape */
+    margin: 0 8px;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    /* Icon color */
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.social-link:hover {
+    background-color: #774ac3;
+}
+
+.social-link i {
+    line-height: 40px;
+}
+
+/* Additional styles for the project sections */
+.project-section {
+    padding: 50px 0;
+}
+
+.project-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Futura', sans-serif;
+}
+
+.project {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.project .project-image {
+    flex: 1;
+    padding: 0 20px;
+    max-width: 100%;
+    /* Adjusted to ensure images fit within their containers */
+    height: auto;
+    /* Maintain aspect ratio */
+    max-height: 300px;
+    /* Limit maximum height for consistency */
+}
+
+.project .project-details {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project .project-details h3 {
+    margin-top: 0;
+    font-family: 'Futura', sans-serif;
+}
+
+.project .project-details p {
+    line-height: 1.6;
+}
+
+/* Additional styles for projects without images */
+.project-without-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjustments for larger screens */
+@media (min-width: 768px) {
+    .social-link {
+        font-size: 20px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        margin-top: 20px;
+    }
+
+    .logo {
+        text-align: center;
+        width: 100%;
+        /* Ensures logo takes full width */
+    }
+
+    /* Hero Section */
+    #home {
+        padding: 80px 20px;
+    }
+
+    #home h1 {
+        font-size: 2.5rem;
+    }
+
+    #home p {
+        font-size: 1.2rem;
+    }
+
+    /* Contact Section */
+    #contact {
+        padding: 40px 20px;
+    }
+
+    form {
+        max-width: 80%;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 15px;
+    }
+
+    /* FAQ */
+    #FAQ {
+        padding: 40px 20px;
+    }
+
+    /* About Section */
+    #about {
+        padding: 40px 20px;
+    }
+
+    #about h1 {
+        font-size: 2.5rem;
+    }
+
+    #about p {
+        font-size: 1.2rem;
+    }
+
+    .team-members {
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
