@@ -8,6 +8,32 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Futura&display=swap">
   <link rel="stylesheet" href="./styles/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    function submitForm(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      var form = document.getElementById("contactForm");
+      var formData = new FormData(form);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://script.google.com/macros/s/AKfycbxHKqL_v_zhzTHsXK2Z3zMSHB-MB4Pw_89tDsZmuSEAUbXOgqPIxu8eWahFKFTF7JHm/exec", true); // Replace with your web app URL
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          var responseContainer = document.getElementById("response");
+          if (xhr.status === 200) {
+            responseContainer.textContent = "Form submitted successfully!";
+            form.reset(); // Optionally clear the form
+          } else {
+            responseContainer.textContent = "Error: " + xhr.statusText;
+          }
+        }
+      };
+
+      xhr.send(new URLSearchParams(formData)); // Send form data as URL-encoded string
+    }
+  </script>
 </head>
 
 <body>
@@ -68,7 +94,7 @@
   <!-- Contact Form Section -->
   <section id="contact">
     <h2>Contact Me!</h2>
-    <form id="contactForm" action="Yhttps://script.google.com/macros/s/AKfycby3IuF9vLlQ5aojv-2hIIWmgXKTh4SpZnqfZEv51x8y1-gleJXzYp10P8fZ1i-X9M_a/exec" method="post">
+    <form id="contactForm" onsubmit="submitForm(event)">
       <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
@@ -85,6 +111,7 @@
         <button type="submit">Send Message</button>
       </div>
     </form>
+    <div id="response"></div>
   </section>
 
   <!-- Footer -->
