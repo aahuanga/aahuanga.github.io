@@ -4,129 +4,431 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Futura&display=swap">
-  <link rel="stylesheet" href="./styles/styles.css">
+  <meta name="description" content="Anna Huang — Electrical Component Engineer and Computer Engineering & CS graduate. Portfolio showcasing embedded systems and software projects.">
+  <title>Anna Huang</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <script>
-    function submitForm(event) {
-      event.preventDefault(); // Prevent default form submission
-
-      var form = document.getElementById("contactForm");
-      var formData = new FormData(form);
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://script.google.com/macros/s/AKfycbxHKqL_v_zhzTHsXK2Z3zMSHB-MB4Pw_89tDsZmuSEAUbXOgqPIxu8eWahFKFTF7JHm/exec", true); // Replace with your web app URL
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          var responseContainer = document.getElementById("response");
-          if (xhr.status === 200) {
-            responseContainer.textContent = "Form submitted successfully!";
-            form.reset(); // Optionally clear the form
-          } else {
-            responseContainer.textContent = "Error: " + xhr.statusText;
-          }
-        }
-      };
-
-      xhr.send(new URLSearchParams(formData)); // Send form data as URL-encoded string
+  <style>
+    :root {
+      --bg: #faf8fc;
+      --surface: #ffffff;
+      --accent: #6b3fa0;
+      --accent-light: rgba(107, 63, 160, 0.08);
+      --text: #1a0a2e;
+      --muted: #7a6b8a;
+      --border: rgba(26, 10, 46, 0.08);
+      --radius: 14px;
+      --max-width: 1100px;
+      --shadow: 0 4px 24px rgba(26, 10, 46, 0.06);
+      --shadow-hover: 0 12px 40px rgba(26, 10, 46, 0.10);
     }
-  </script>
+
+    [data-theme="dark"] {
+      --bg: #0e0818;
+      --surface: #1a1026;
+      --accent: #a87de0;
+      --accent-light: rgba(168, 125, 224, 0.12);
+      --text: #ede8f5;
+      --muted: #9b8ab0;
+      --border: rgba(168, 125, 224, 0.12);
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+      --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.45);
+      --card-bg: #1a1026;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+    }
+    .skip-link:focus {
+      position: fixed; left: 1rem; top: 1rem; width: auto; height: auto;
+      padding: .5rem 1rem; background: var(--accent); color: #fff;
+      border-radius: 8px; z-index: 1000; text-decoration: none; font-weight: 600;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .navbar-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: .85rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo h1 {
+      font-size: 1rem; font-weight: 600; color: var(--text); letter-spacing: .2px;
+    }
+    .nav-links { display: flex; gap: .35rem; }
+    .nav-link {
+      color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500;
+      padding: .4rem .75rem; border-radius: 8px; transition: background .15s, color .15s;
+    }
+    .nav-link:hover, .nav-link[aria-current="page"] {
+      background: var(--accent-light); color: var(--accent);
+    }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      background: none; border: 1px solid var(--border); border-radius: 8px;
+      color: var(--muted); cursor: pointer; font-size: .85rem;
+      padding: .35rem .6rem; transition: background .15s, color .15s;
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .theme-toggle:hover { background: var(--accent-light); color: var(--accent); }
+
+    /* Focus styles for accessibility */
+    :focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+    }
+    .nav-link:focus-visible,
+    .learn-more:focus-visible,
+    .social-link:focus-visible,
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px;
+    }
+
+    /* Main */
+    main { position: relative; z-index: 1; max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+
+    /* About */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 4rem 0 3rem;
+      align-items: center;
+      min-height: unset;
+    }
+    @media (min-width: 750px) {
+      #about { grid-template-columns: 280px 1fr; gap: 3rem; }
+    }
+    .about-img {
+      width: 100%; max-width: 280px;
+      border-radius: var(--radius);
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+      box-shadow: var(--shadow);
+      display: block;
+    }
+    .about-text h2 {
+      font-size: 1.75rem; font-weight: 600; color: var(--text);
+      margin-bottom: .5rem; line-height: 1.3;
+    }
+    .about-text .lead {
+      font-size: .95rem; color: var(--accent); font-weight: 500;
+      margin-bottom: .75rem;
+    }
+    .about-text p { color: var(--muted); font-size: .95rem; }
+
+    /* Divider */
+    .divider {
+      border: none; border-top: 1px solid var(--border); margin: 0;
+    }
+
+    /* Projects */
+    #projects { padding: 3rem 0 4rem; }
+    #projects h2 {
+      font-size: 1.25rem; font-weight: 600; color: var(--text);
+      margin-bottom: 1.25rem; letter-spacing: .1px;
+    }
+    .project-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 600px) {
+      .project-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    .project-card h3 {
+      font-size: 1rem; font-weight: 600; color: var(--text);
+    }
+    .project-card p {
+      font-size: .875rem; color: var(--muted); flex: 1;
+    }
+    .learn-more {
+      display: inline-flex; align-items: center; gap: .3rem;
+      color: var(--accent); text-decoration: none; font-size: .875rem; font-weight: 600;
+      margin-top: .25rem; transition: gap .15s;
+    }
+    .learn-more::after { content: "→"; }
+    .learn-more:hover { gap: .5rem; }
+
+    /* Footer */
+    footer.footer {
+      border-top: 1px solid var(--border);
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 1.5rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: .75rem;
+    }
+    .social-links { display: flex; gap: .6rem; }
+    .social-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); text-decoration: none; font-size: 1rem;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .social-link:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+    footer p { font-size: .8rem; color: var(--muted); }
+
+    /* Utility */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* Typewriter cursor */
+    .typewriter::after {
+      content: '|'; color: var(--accent);
+      animation: blink .7s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+
+    /* Signal section */
+    #signal {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .signal-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .signal-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      min-width: 120px;
+      box-shadow: var(--shadow);
+    }
+    .signal-card .val {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .signal-card .lbl {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .25rem;
+    }
+    .scope-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    #scope { width: 100%; display: block; }
+  </style>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <!-- Navbar -->
-  <div class="navbar">
-    <!-- Logo -->
-    <div class="logo">
-      <h1>Anna Huang</h1>
+  <header class="navbar" role="banner">
+    <div class="navbar-inner">
+      <div class="logo"><h1>Anna Huang</h1></div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html" class="nav-link" aria-current="page">Home</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i>
+      </button>
     </div>
-    <!-- Navigation Links -->
-    <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="projects.html" class="nav-link">Projects</a>
-      <!-- <a href="index.html#contact" class="nav-link">Contact</a> -->
-    </div>
-  </div>
+  </header>
 
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="team-member">
-            <img src="./assets/anna_huang.jpg" alt="Anna Huang" class="img-fluid rounded-circle">
+  <main id="main" role="main">
+    <!-- About Section -->
+    <section id="about" aria-labelledby="about-heading">
+      <img src="./assets/anna_huang.jpg" alt="Photo of Anna Huang" class="about-img">
+      <div class="about-text">
+        <h2 id="about-heading">Hello, I'm Anna Huang</h2>
+        <p class="lead typewriter" id="typed-lead"></p>
+        <p>I'm passionate about technology and hardware engineering, with a strong focus on digital systems, FPGA design, and RTL development.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- Projects Section -->
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">My Projects</h2>
+      <section id="signal" aria-label="Engineering stats" role="region">
+        <div class="signal-grid">
+          <div class="signal-card">
+            <span class="val" id="bin-clock">000000</span>
+            <span class="lbl">Binary Clock (sec)</span>
+          </div>
+          <div class="signal-card">
+            <span class="val" id="cpu-cycles">—</span>
+            <span class="lbl">~CPU cycles / sec</span>
+          </div>
+          <div class="signal-card">
+            <span class="val">5</span>
+            <span class="lbl">Languages</span>
+          </div>
+          <div class="signal-card">
+            <span class="val">10+</span>
+            <span class="lbl">Projects Built</span>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="team-member">
-            <h2>Hello! I'm Anna Huang</h2>
-            <p class="lead">Junior @ UW-Madison | Computer Engineering and Computer Science</p>
-            <p>I am passionate about harnessing technology to help people tackle real-world challenges.</p>
-          </div>
+        <div class="scope-wrap">
+          <canvas id="scope" height="60"></canvas>
+        </div>
+      </section>
+
+      <div class="project-cards">
+        <div class="project-card">
+          <h3>Computer Science</h3>
+          <p>Algorithms, mobile apps, 3D graphics, and more — built across multiple languages and frameworks.</p>
+          <a href="projects.html#computer-science-projects" class="learn-more">Explore</a>
+        </div>
+        <div class="project-card">
+          <h3>Computer Engineering</h3>
+          <p>Embedded systems, MIPS processors, PCB design, smart glasses, and FPGA logic analyzers.</p>
+          <a href="projects.html#computer-engineering-projects" class="learn-more">Explore</a>
         </div>
       </div>
-    </div>
-  </section>
-  
+    </section>
+  </main>
 
-  <!-- Projects Section -->
-  <section id="projects">
-    <h1>My Projects</h1>
-    <div class="project-cards">
-      <!-- Project Card 1 -->
-      <div class="project-card">
-        <h2>Computer Science Projects</h2>
-        <p>Brief description of the project.</p>
-        <a href="projects.html#computer-science-projects" class="learn-more">Learn More</a>
-      </div>
-      <!-- Project Card 2 -->
-      <div class="project-card">
-        <h2>Computer Engineering Projects</h2>
-        <p>Brief description of the project.</p>
-        <a href="projects.html#computer-engineering-projects" class="learn-more">Learn More</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Form Section -->
-  <!-- <section id="contact">
-    <h2>Contact Me!</h2>
-    <form id="contactForm" onsubmit="submitForm(event)">
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-      </div>
-      <div>
-        <button type="submit">Send Message</button>
-      </div>
-    </form>
-    <div id="response"></div>
-  </section> -->
-
-  <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="social-links">
-      <a href="https://www.linkedin.com/in/anna-huang-9b04a3221/" target="_blank" class="social-link">
-        <i class="fab fa-linkedin"></i>
+      <a href="https://www.linkedin.com/in/anna-huang-9b04a3221/" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fab fa-linkedin" aria-hidden="true"></i><span class="sr-only">LinkedIn</span>
       </a>
-      <a href="https://github.com/aahuanga" target="_blank" class="social-link">
-        <i class="fab fa-github"></i>
+      <a href="https://github.com/aahuanga" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span>
       </a>
     </div>
-    <p>&copy; 2024 Anna Huang. All rights reserved.</p>
+    <p>&copy; <span id="year"></span> Anna Huang. All rights reserved.</p>
   </footer>
 
-</body>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-</html>
+    // Typewriter
+    const lines = ['Electrical Component Engineer @ GE Healthcare', 'B.S. Computer Engineering & CS'];
+    const el = document.getElementById('typed-lead');
+    let lineIndex = 0, charIndex = 0;
+    function type() {
+      if (lineIndex < lines.length) {
+        if (charIndex <= lines[lineIndex].length) {
+          const done = lines.slice(0, lineIndex).join('\n') + (lineIndex > 0 ? '\n' : '') + lines[lineIndex].slice(0, charIndex++);
+          el.innerHTML = done.replace(/\n/g, '<br>');
+          setTimeout(type, 38);
+        } else { lineIndex++; charIndex = 0; setTimeout(type, 180); }
+      } else { el.classList.remove('typewriter'); }
+    }
+    el.classList.add('typewriter');
+    setTimeout(type, 400);
+
+    // Binary clock
+    function updateBin() {
+      const s = new Date().getSeconds();
+      document.getElementById('bin-clock').textContent = s.toString(2).padStart(6, '0');
+    }
+    updateBin();
+    setInterval(updateBin, 1000);
+
+    // CPU cycles
+    const cpuEl = document.getElementById('cpu-cycles');
+    function fmtBig(n) {
+      if (n >= 1e9) return (n/1e9).toFixed(2) + 'G';
+      if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+      return n;
+    }
+    setInterval(() => {
+      const c = Math.round(3e9 * (1 + (Math.random() - 0.5) * 0.02));
+      cpuEl.textContent = fmtBig(c);
+    }, 500);
+
+    // Oscilloscope
+    const scopeCanvas = document.getElementById('scope');
+    const sctx = scopeCanvas.getContext('2d');
+    let phase = 0;
+    function resizeScope() { scopeCanvas.width = scopeCanvas.offsetWidth; }
+    resizeScope();
+    window.addEventListener('resize', resizeScope);
+    function drawScope() {
+      const w = scopeCanvas.width, h = scopeCanvas.height;
+      sctx.clearRect(0, 0, w, h);
+      sctx.strokeStyle = 'rgba(107,63,160,0.15)';
+      sctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 40) { sctx.beginPath(); sctx.moveTo(x,0); sctx.lineTo(x,h); sctx.stroke(); }
+      sctx.beginPath(); sctx.moveTo(0, h/2); sctx.lineTo(w, h/2); sctx.stroke();
+      sctx.beginPath();
+      sctx.strokeStyle = '#b47dff';
+      sctx.lineWidth = 2;
+      for (let x = 0; x <= w; x++) {
+        const t = (x / w) * Math.PI * 8 + phase;
+        const y = h/2 - (Math.sin(t) * 0.6 + Math.sin(t * 2.3) * 0.25 + Math.sin(t * 5.1) * 0.1) * (h * 0.38);
+        x === 0 ? sctx.moveTo(x, y) : sctx.lineTo(x, y);
+      }
+      sctx.stroke();
+      phase += 0.04;
+      requestAnimationFrame(drawScope);
+    }
+    drawScope();
+
+    // Dark mode toggle
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = saved || (osDark ? 'dark' : 'light');
+    root.setAttribute('data-theme', initial);
+
+    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleIcon = document.getElementById('theme-icon');
+    updateIcon(initial);
+
+    toggleBtn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+
+    function updateIcon(theme) {
+      toggleIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+  </script>
+</body></html>

@@ -5,125 +5,339 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Projects</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Futura&display=swap">
-  <link rel="stylesheet" href="./styles/styles.css">
+  <meta name="description" content="Anna Huang — project portfolio featuring embedded systems, firmware, and software projects in computer engineering & computer science.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    :root {
+      --bg: #faf8fc; --surface: #ffffff; --accent: #6b3fa0;
+      --accent-light: rgba(107,63,160,0.08); --text: #1a0a2e; --muted: #7a6b8a;
+      --border: rgba(26,10,46,0.08); --radius: 14px; --max-width: 1100px;
+      --shadow: 0 4px 24px rgba(26,10,46,0.06); --shadow-hover: 0 12px 40px rgba(26,10,46,0.10);
+    }
+    [data-theme="dark"] {
+      --bg: #0e0818; --surface: #1a1026; --accent: #a87de0;
+      --accent-light: rgba(168,125,224,0.12); --text: #ede8f5; --muted: #9b8ab0;
+      --border: rgba(168,125,224,0.12);
+      --shadow: 0 4px 24px rgba(0,0,0,0.3); --shadow-hover: 0 12px 40px rgba(0,0,0,0.45);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .skip-link { position: absolute; left: -999px; width: 1px; height: 1px; overflow: hidden; }
+    .skip-link:focus { position: fixed; left: 1rem; top: 1rem; width: auto; height: auto; padding: .5rem 1rem; background: var(--accent); color: #fff; border-radius: 8px; z-index: 1000; text-decoration: none; font-weight: 600; }
+    html { scroll-behavior: smooth; }
+
+    /* Navbar */
+    header.navbar { position: sticky; top: 0; z-index: 100; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: background .2s; }
+    .navbar-inner { max-width: var(--max-width); margin: 0 auto; padding: .85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo h1 { font-size: 1rem; font-weight: 600; color: var(--text); letter-spacing: .2px; }
+    nav.nav-links { display: flex; gap: .35rem; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500; padding: .4rem .75rem; border-radius: 8px; transition: background .15s, color .15s; }
+    .nav-link:hover, .nav-link[aria-current="page"] { background: var(--accent-light); color: var(--accent); }
+    .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); cursor: pointer; font-size: .85rem; padding: .35rem .6rem; transition: background .15s, color .15s; display: flex; align-items: center; gap: .3rem; }
+    .theme-toggle:hover { background: var(--accent-light); color: var(--accent); }
+
+    /* Layout */
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+    .project-section { padding: 1.5rem 0; }
+    .project-section h2 { font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: 1.25rem; }
+    .project-section h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: .4rem; }
+    .project-section p { font-size: .875rem; color: var(--muted); }
+
+    /* Project cards */
+    .project { display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+    @media(min-width: 820px) { .project { grid-template-columns: 260px 1fr; } }
+    .project-image img { border-radius: var(--radius); box-shadow: var(--shadow); max-width: 100%; height: auto; }
+    .project-without-image { margin-bottom: 1rem; }
+    .project-without-image .project-details,
+    .project .project-details {
+      background: var(--surface) !important;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border) !important;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .project-without-image .project-details:hover,
+    .project .project-details:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+    .github-button {
+      display: inline-flex; align-items: center; gap: .3rem;
+      margin-top: .6rem; color: var(--accent); text-decoration: none;
+      font-weight: 600; font-size: .875rem; transition: gap .15s;
+    }
+    .github-button::after { content: "→"; }
+    .github-button:hover { gap: .5rem; }
+
+    /* Focus styles for accessibility */
+    :focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+    }
+    .github-button:focus-visible,
+    .nav-link:focus-visible,
+    .section-nav a:focus-visible,
+    .social-link:focus-visible,
+    .theme-toggle:focus-visible,
+    .back-to-top:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px;
+    }
+
+    /* Section jump nav */
+    .section-nav { position: sticky; top: 57px; z-index: 90; display: flex; justify-content: center; padding: .75rem 0; pointer-events: none; }
+    .section-nav-inner { display: flex; gap: .5rem; pointer-events: all; }
+    .section-nav a {
+      font-size: .85rem; font-weight: 600; color: var(--muted); text-decoration: none;
+      padding: .4rem .9rem; border-radius: 99px; background: var(--surface);
+      border: 1px solid var(--border); backdrop-filter: blur(8px);
+      box-shadow: var(--shadow); transition: background .15s, color .15s, box-shadow .15s;
+    }
+    .section-nav a:hover, .section-nav a.active { background: var(--accent); color: #fff; box-shadow: 0 4px 16px rgba(107,63,160,0.25); border-color: transparent; }
+
+    /* Footer */
+    footer.footer { max-width: var(--max-width); margin: 2rem auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); flex-wrap: wrap; gap: .75rem; }
+    footer p { font-size: .8rem; color: var(--muted); }
+    footer p a { color: var(--muted); text-decoration: none; }
+    .social-links { display: flex; gap: .6rem; }
+    .social-link { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 1rem; transition: background .15s, color .15s, border-color .15s; }
+    .social-link:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+    /* Back to top */
+    .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200; width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: .85rem; box-shadow: 0 4px 16px rgba(107,63,160,0.3); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .back-to-top.visible { opacity: 1; pointer-events: all; }
+    .back-to-top:hover { opacity: .85; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <!-- Navbar -->
-  <div class="navbar">
-    <!-- Logo -->
-    <div class="logo">
-      <h1>Anna Huang</h1>
+  <header class="navbar" role="banner">
+    <div class="navbar-inner">
+      <div class="logo"><h1>Anna Huang</h1></div>
+      <nav class="nav-links" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="projects.html" class="nav-link" aria-current="page">Projects</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i>
+      </button>
     </div>
-    <!-- Navigation Links -->
-    <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="projects.html" class="nav-link">Projects</a>
-      <!-- <a href="index.html#contact" class="nav-link">Contact</a> -->
-    </div>
-  </div>
+  </header>
 
-  <!-- Project Section 1: Computer Science Projects -->
-  <section class="project-section" id="computer-science-projects">
-    <div class="container">
-      <h2>Computer Science Projects</h2>
-      <div class="project">
-        <div class="project-image">
-          <img src="./assets/jocki.png" alt="Computer Science Project 1" style="max-width: 100%; height: auto;">
+  <main id="main" role="main">
+    <nav class="section-nav" aria-label="Jump to project section">
+      <div class="section-nav-inner">
+        <a href="#computer-engineering-projects" class="active">Computer Engineering</a>
+        <a href="#computer-science-projects">Computer Science</a>
+      </div>
+    </nav>
+
+    <!-- Project Section 2: Computer Engineering Projects -->
+    <section class="project-section" id="computer-engineering-projects" aria-labelledby="ce-heading">
+      <div class="container">
+        <h2 id="ce-heading">Computer Engineering Projects</h2>
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>FourSights Smart Glasses</h3>
+            <p>Designed and implemented an embedded smart glasses system for visual assistance, integrating a Raspberry Pi
+              5 and PSoC 6 to support real-time OCR and text-to-speech functionality. Developed and validated firmware on
+              the CY8PROTO-063-BLE, enabling reliable interfacing with IMU, ultrasonic, light, and capacitive touch
+              sensors. As part of the microprocessor design team, contributed to a solution aimed at improving
+              accessibility for visually impaired users, earning the Best Overall Project – Alumni Decision award.</p>
+          </div>
         </div>
-        <div class="project-details">
-          <h3>Jocki (Mobile App)</h3>
-          <p>Developed a music party app using React Native and Tailwind CSS for iOS platforms, optimizing UI/UX and
-            integrating native modules for enhanced functionality.</p>
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>Neuron</h3>
+            <p>Designed and implemented a simplified neuron for a binary activity classifier in Cadence using ReLU
+              activation. Developed the logic-gate level schematic, symbol, and layout, optimizing the design and
+              verifying functionality through LVS and DRC checks.</p>
+          </div>
+        </div>
+        <!-- Project 1: Digital System Design and Synthesis Spring 2024 -->
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>MIPS Processor</h3>
+            <p>Designed and implemented MIPS-like processors in Verilog, spanning single-cycle, multi-cycle, and
+              five-stage pipelined architectures. To improve memory performance, integrated both direct-mapped and two-way
+              set-associative caches. Verified correct functionality and post-synthesis timing using Synopsys Design
+              Compiler and static timing analysis, ensuring reliable operation and timing closure.</p>
+            <a href="https://github.com/abhinavnandwani/ece552-computer-architecture" class="github-button"
+              target="_blank" rel="noopener noreferrer">View Code</a>
+          </div>
+        </div>
+
+        <!-- Project 1: Digital System Design and Synthesis Spring 2024 -->
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>Logic Analyzer</h3>
+            <p>Developed Verilog modules and testbenches for a logic analyzer project, ensuring accurate data acquisition
+              and processing. Collaborated with team members to integrate Verilog modules, conducted synthesis, and
+              post-synthesis optimizations to meet FPGA hardware specifications, ensuring compatibility and enhancing
+              design efficiency for a high-performance logic analyzer solution.</p>
+            <a href="https://github.com/aahuanga/ece551" class="github-button" target="_blank" rel="noopener noreferrer">View Code</a>
+          </div>
+        </div>
+
+        <!-- Project 2: Introduction to Microprocessor Systems and Laboratory Fall 2023 -->
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>Microprocessor Llama Game</h3>
+            <p>Designed and developed a two-player game using C and FreeRTOS on a PSoC ARM-Cortex Microcontroller.
+              Implemented and debugged software for peripherals (I2C, SPI, UART) and hardware interfaces.</p>
+            <a href="https://github.com/aahuanga/ece353/tree/main/project" class="github-button" target="_blank" rel="noopener noreferrer">View
+              Code</a>
+          </div>
+        </div>
+
+
+        <div class="project">
+          <div class="project-image">
+            <img src="./assets/pcb.png" alt="PCB" style="max-width: 100%; height: auto;">
+          </div>
+          <div class="project-details">
+            <h3>Custom PCB</h3>
+            <p>Created schematic symbols, PCB footprints, assembled a custom PCB, and programmed embedded firmware using
+              Altium Designer.</p>
+          </div>
+        </div>
+
+        <!-- Project 3: Introduction to Electrical Engineering Summer 2022 -->
+        <div class="project-without-image">
+          <!-- <div class="project">
+          <div class="project-image">
+          </div> -->
+          <div class="project-details">
+            <h3>Automatic Lock Prototype</h3>
+            <p>Prototyped an automatic lock by creating a circuit with a breadboard including LEDs, Push Buttons and
+              motors. Developed and programmed software using an Arduino. Implemented designs of individual circuit
+              diagram schematic and flow chart.</p>
+          </div>
         </div>
       </div>
-      <div class="project-without-image">
-        <div class="project-details">
-          <h3>C Sudoku Solver</h3>
-          <p>Developed a Sudoku Solver in C using the Siamese method, integrating advanced data structures and efficient
-            file handling for optimal puzzle solving.</p>
-            <a href="https://github.com/aahuanga/cs354/tree/main/p2" class="github-button" target="_blank">View Code</a>
+    </section>
+
+    <!-- Project Section 1: Computer Science Projects -->
+    <section class="project-section" id="computer-science-projects" aria-labelledby="cs-heading">
+      <div class="container">
+        <h2 id="cs-heading">Computer Science Projects</h2>
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>Retail Color Picker</h3>
+            <p>Developed a Retail Color Picker application using classical computer vision techniques to automatically
+              segment and recolor clothing in images for enhanced online retail visualization. Implemented a hybrid
+              K-Means and GrabCut segmentation pipeline with HSV-based color transformation to preserve garment texture,
+              shading, and logos while enabling real-time interaction through a custom graphical user interface.</p>
+            <a href="https://github.com/aahuanga/cs566-project" class="github-button" target="_blank" rel="noopener noreferrer">View Code</a>
+          </div>
+        </div>
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>Asteroid Field</h3>
+            <p>Created a 3D Asteroids-inspired space runner using Three.js, where players pilot a spaceship to dodge
+              obstacles, shoot targets, and rack up points. Built dynamic animations including rotating obstacles,
+              particle explosions, and a starry background to bring the game world to life. Developed an automated system
+              for infinite obstacle spawning with random sizes, speeds, and rotations, along with scaling difficulty and
+              toggleable game modes for a smooth and engaging gameplay experience.</p>
+            <a href="https://github.com/Malanza/Astroid-fieldCS559" class="github-button" target="_blank" rel="noopener noreferrer">View Code</a>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project-image">
+            <img src="./assets/jocki.png" alt="Computer Science Project 1" style="max-width: 100%; height: auto;">
+          </div>
+          <div class="project-details">
+            <h3>Jocki (Mobile App)</h3>
+            <p>Developed a music party app using React Native and Tailwind CSS for iOS platforms, optimizing UI/UX and
+              integrating native modules for enhanced functionality.</p>
+          </div>
+        </div>
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>C Sudoku Solver</h3>
+            <p>Developed a Sudoku Solver in C using the Siamese method, integrating advanced data structures and efficient
+              file handling for optimal puzzle solving.</p>
+            <a href="https://github.com/aahuanga/cs354/tree/main/p2" class="github-button" target="_blank" rel="noopener noreferrer">View Code</a>
+          </div>
+        </div>
+        <div class="project-without-image">
+          <div class="project-details">
+            <h3>SkyLink (Flight Path Optimization)</h3>
+            <p>Implemented Dijkstra’s algorithm in Java for optimal flight path computation, with a JavaFX GUI for user
+              interaction and rigorous testing using JUnit.</p>
+          </div>
         </div>
       </div>
-      <div class="project-without-image">
-        <div class="project-details">
-          <h3>SkyLink (Flight Path Optimization)</h3>
-          <p>Implemented Dijkstra’s algorithm in Java for optimal flight path computation, with a JavaFX GUI for user
-            interaction and rigorous testing using JUnit.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Project Section 2: Computer Engineering Projects -->
-  <section class="project-section" id="computer-engineering-projects">
-    <div class="container">
-      <h2>Computer Engineering Projects</h2>
-
-      <!-- Project 1: Digital System Design and Synthesis Spring 2024 -->
-      <div class="project-without-image">
-        <div class="project-details">
-          <h3>Logic Analyzer</h3>
-          <p>Developed Verilog modules and testbenches for a logic analyzer project, ensuring accurate data acquisition
-            and processing. Collaborated with team members to integrate Verilog modules, conducted synthesis, and
-            post-synthesis optimizations to meet FPGA hardware specifications, ensuring compatibility and enhancing
-            design efficiency for a high-performance logic analyzer solution.</p>
-            <a href="https://github.com/aahuanga/ece551" class="github-button" target="_blank">View Code</a>
-        </div>
-      </div>
-
-      <!-- Project 2: Introduction to Microprocessor Systems and Laboratory Fall 2023 -->
-      <div class="project-without-image">
-        <div class="project-details">
-          <h3>Microprocessor Llama Game</h3>
-          <p>Designed and developed a two-player game using C and FreeRTOS on a PSoC ARM-Cortex Microcontroller.
-            Implemented and debugged software for peripherals (I2C, SPI, UART) and hardware interfaces.</p>
-          <a href="https://github.com/aahuanga/ece353/tree/main/project" class="github-button" target="_blank">View Code</a>
-        </div>
-      </div>
-
-
-      <div class="project">
-        <div class="project-image">
-          <img src="./assets/pcb.png" alt="PCB" style="max-width: 100%; height: auto;">
-        </div>
-        <div class="project-details">
-          <h3>Custom PCB</h3>
-          <p>Created schematic symbols, PCB footprints, assembled a custom PCB, and programmed embedded firmware using
-            Altium Designer.</p>
-        </div>
-      </div>
-
-      <!-- Project 3: Introduction to Electrical Engineering Summer 2022 -->
-      <div class="project-without-image">
-      <!-- <div class="project">
-        <div class="project-image">
-        </div> -->
-        <div class="project-details">
-          <h3>Automatic Lock Prototype</h3>
-          <p>Prototyped an automatic lock by creating a circuit with a breadboard including LEDs, Push Buttons and
-            motors. Developed and programmed software using an Arduino. Implemented designs of individual circuit
-            diagram schematic and flow chart.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
+  <!-- Footer moved outside main -->
+  <footer class="footer" role="contentinfo">
     <div class="social-links">
-      <a href="https://www.linkedin.com/in/anna-huang-9b04a3221/" target="_blank" class="social-link">
-        <i class="fab fa-linkedin"></i>
+      <a href="https://www.linkedin.com/in/anna-huang-9b04a3221/" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fab fa-linkedin" aria-hidden="true"></i><span class="sr-only">LinkedIn</span>
       </a>
-      <a href="https://github.com/aahuanga" target="_blank" class="social-link">
-        <i class="fab fa-github"></i>
+      <a href="https://github.com/aahuanga" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span>
       </a>
     </div>
-    <p>&copy; 2024 <a href="index.html">Anna Huang</a></p>
+    <p>&copy; <span id="year"></span> <a href="index.html">Anna Huang</a></p>
   </footer>
 
+  <button class="back-to-top" id="btt" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-chevron-up" aria-hidden="true"></i>
+  </button>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Dark mode — same logic as index.html
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = saved || (osDark ? 'dark' : 'light');
+    root.setAttribute('data-theme', initial);
+    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleIcon = document.getElementById('theme-icon');
+    updateIcon(initial);
+    toggleBtn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+    function updateIcon(theme) {
+      toggleIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    // Section nav observer
+    const sections = document.querySelectorAll('.project-section');
+    const navLinks = document.querySelectorAll('.section-nav a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.section-nav a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+
+    // Back to top
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+      btt.classList.toggle('visible', window.scrollY > 300);
+    });
+  </script>
 </body>
 
 </html>
